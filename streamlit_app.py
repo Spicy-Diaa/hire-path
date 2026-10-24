@@ -45,23 +45,23 @@ def analyze_gaps(student_text, job_requirements):
 
 def make_roadmap(job_title, missing):
     if not missing:
-        return ["جاهز للتقديم مباشرة ✅"]
+        return ["Ready to apply now ✅"]
     ordered = sorted(missing, key=lambda s: skill_priority.get(s, 5), reverse=True)
-    steps = [f"{i}. تعلّم {s} وطبّقه في مشروع صغير" for i, s in enumerate(ordered, start=1)]
-    steps.append(f"{len(steps) + 1}. أضف المهارات والمشروع في الـ CV وقدّم على وظيفة {job_title}")
+    steps = [f"{i}. Learn {s.title()} and build a small project with it" for i, s in enumerate(ordered, start=1)]
+    steps.append(f"{len(steps) + 1}. Add the new skills and project to your CV, then apply for {job_title}")
     return steps
 
 
-st.title("💼 Hire Path")
+st.title("🚀 Hire Path")
 st.subheader("Smart Job Matching & Skill Gap Analysis")
 
 uploaded = st.file_uploader("Upload your CV (PDF)", type=["pdf"])
 
 if st.button("Analyze My CV"):
     if uploaded is None:
-        st.warning("اختار ملف PDF الأول")
+        st.warning("Please choose a PDF file first")
     else:
-        with st.spinner("جاري التحليل..."):
+        with  st.spinner("Analyzing your CV..."):
             model = load_model()
             reader = PdfReader(uploaded)
             cv_text = ""
