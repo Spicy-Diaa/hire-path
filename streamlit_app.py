@@ -113,4 +113,13 @@ if st.button("Analyze My CV"):
                         "Skills Match", min_value=0, max_value=100, format="%.0f%%"
                     ),
                     "AI Similarity": st.column_config.ProgressColumn(
-                        "AI Similarity",
+                                                "AI Similarity", min_value=0, max_value=100, format="%.0f%%"
+                    ),
+                },
+            )
+
+            st.subheader("Your Learning Roadmap")
+            for r in results[:5]:
+                with st.expander(f"{r['job']} — {r['skills_match']}%"):
+                    for step in r["roadmap"]:
+                        st.write(step)
