@@ -53,7 +53,6 @@ def make_roadmap(job_title, missing):
 
 st.title("💼 Hire Path")
 st.subheader("Smart Job Matching & Skill Gap Analysis")
-st.write("ارفع الـ CV بصيغة PDF وشوف الوظائف المناسبة والمهارات الناقصة.")
 
 uploaded = st.file_uploader("Upload your CV (PDF)", type=["pdf"])
 
