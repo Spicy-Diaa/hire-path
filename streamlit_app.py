@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
@@ -86,16 +87,30 @@ if st.button("Analyze My CV"):
 
             results.sort(key=lambda r: (r["skills_match"], r["ai_sim"]), reverse=True)
 
-        st.success("تم تحليل الـ CV!")
-        best = results[0]
-        st.subheader("أفضل وظيفة مناسبة")
-        st.metric(best["job"], f"{best['skills_match']}%")
+            st.success("CV analysis completed!")
 
-        st.subheader("كل النتائج")
-        for r in results:
-            with st.expander(f"{r['job']} — تطابق المهارات {r['skills_match']}% | تشابه الموديل {r['ai_sim']}%"):
-                st.write("**المهارات الموجودة:** " + (", ".join(r["matched"]) or "لا يوجد"))
-                st.write("**المهارات الناقصة:** " + (", ".join(r["missing"]) or "لا يوجد"))
-                st.write("**الخطة:**")
-                for step in r["roadmap"]:
-                    st.write(step)
+            best = results[0]
+            c1, c2, c3 = st.columns(3)
+            c1.metric("Best Match", best["job"])
+            c2.metric("Skills Match", f"{best['skills_match']}%")
+            c3.metric("AI Similarity", f"{best['ai_sim']}%")
+
+            st.subheader("Job Matching Results")
+            table = pd.DataFrame([{
+                "Job": r["job"],
+                "Skills Match": r["skills_match"],
+                "AI Similarity": r["ai_sim"],
+                "Matched Skills": ", ".join(r["matched"]) or "None",
+                "Missing Skills": ", ".join(r["missing"]) or "None",
+            } for r in results])
+
+            st.dataframe(
+                table,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Skills Match": st.column_config.ProgressColumn(
+                        "Skills Match", min_value=0, max_value=100, format="%.0f%%"
+                    ),
+                    "AI Similarity": st.column_config.ProgressColumn(
+                        "AI Similarity",
