@@ -4,8 +4,7 @@ from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
-st.set_page_config(page_title="Hire Path", page_icon="💼")
-
+st.set_page_config(page_title="Hire Path", page_icon="🚀", layout="wide")
 jobs = [
     {"work": "Front-End Developer", "requirements": "HTML, CSS, JavaScript, React, Web Performance"},
     {"work": "Python Back-End Developer", "requirements": "Python, Django, Flask, SQL, REST APIs"},
